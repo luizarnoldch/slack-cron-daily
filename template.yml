@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Hello Test
+
+Parameters:
+  HelloToken:
+    Type: String
+    Description: HelloToken
+    Default: xoxp-5981939516437-5984765430387-5985196206706-90660240438b0d80f89782504f1481e0
+
+Resources:
+  HelloWorlTestwithGo:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      CodeUri: lambda.zip
+      FunctionName: HelloWorlTestwithGo
+      Handler: bootstrap
+      Runtime: provided.al2
+      Timeout: 900
+      MemorySize: 1024
+      Environment:
+        Variables:
+          SLACK_TOKEN: !Ref HelloToken
+
+  TimeDayliEvent:
+    Type: AWS::Events::Rule
+    Properties: 
+      Description: "Evento que se dispara durante el dia"
+      ScheduleExpression: "cron(0 14,19,20,0 ? * MON-FRI *)"
+      State: "ENABLED"
+      Targets: 
+        - 
+          Arn: !GetAtt HelloWorlTestwithGo.Arn
+          Id: "TargetFunctionV1"
+
+  PermissionForEventsToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref HelloWorlTestwithGo
+      Action: 'lambda:InvokeFunction'
+      Principal: 'events.amazonaws.com'
+      SourceArn: !GetAtt TimeDayliEvent.Arn
+Outputs:
+  LambdaEmailArnOutput:
+    Description: ARN of the Hello Lambda Function
+    Value: !GetAtt HelloWorlTestwithGo.Arn

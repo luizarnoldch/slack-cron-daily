@@ -1,0 +1,10 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "hello-test"
+resolve_s3 = true
+s3_prefix = "hello-test"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "HelloToken=\"xoxp-5981939516437-5984765430387-5985196206706-90660240438b0d80f89782504f1481e0\""
+image_repositories = []
