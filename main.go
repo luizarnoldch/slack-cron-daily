@@ -17,7 +17,7 @@ func handler(ctx context.Context) (string, error) {
 	channel := "#testing"
 
 	limaTimeZone := time.FixedZone("Lima Time", -5*60*60)
-	limaTime := time.Date(2023, 10, 3, 18, 05, 0, 0, limaTimeZone)
+	limaTime := time.Now().In(limaTimeZone)
 
 	fmt.Println("Lima Time:", limaTime.Format("2006-01-02 15:04:05.999999999 -0700 MST"))
 

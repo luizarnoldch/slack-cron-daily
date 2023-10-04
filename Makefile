@@ -3,4 +3,4 @@ build:
 	zip lambda.zip bootstrap
 	rm -rf bootstrap
 deploy:
-	sam deploy --stack-name hello-test --capabilities CAPABILITY_NAMED_IAM
+	sam deploy --stack-name hello-test --guided --resolve-s3

@@ -23,12 +23,20 @@ Resources:
       Environment:
         Variables:
           SLACK_TOKEN: !Ref HelloToken
+      Policies:
+        - AWSLambdaExecute
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - 'events:PutEvents'
+              Resource: '*'
 
   TimeDayliEvent:
     Type: AWS::Events::Rule
     Properties: 
       Description: "Evento que se dispara durante el dia"
-      ScheduleExpression: "cron(0 14,19,20,0 ? * MON-FRI *)"
+      ScheduleExpression: "cron(0 14,18,29,23 ? * MON-FRI *)"
       State: "ENABLED"
       Targets: 
         - 
